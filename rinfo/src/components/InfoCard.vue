@@ -62,7 +62,6 @@ p {
 }
 p.date {
   font-size: 80%;
-  opacity: 60%;
 }
 a {
   text-decoration: none;
