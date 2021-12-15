@@ -1,7 +1,10 @@
 <template>
   <HeaderBox />
   <HelloWorld msg="Welcome" />
-  <InfoCard headline="Big HeadLine on Stuff" />
+
+  <div v-for="item of items" :key="item.title">
+    <InfoCard :mdata="item" />
+  </div>
 </template>
 
 <script>
@@ -15,6 +18,40 @@ export default {
     HelloWorld,
     HeaderBox,
     InfoCard,
+  },
+  data() {
+    return {
+      rssUrl: "https://www.francetvinfo.fr/titres.rss",
+      items: [],
+    };
+  },
+  methods: {
+    async getRss() {
+      const res = await fetch(
+        `https://api.allorigins.win/get?url=${this.rssUrl}`
+      );
+      const { contents } = await res.json();
+      const feed = new window.DOMParser().parseFromString(contents, "text/xml");
+      const items = feed.querySelectorAll("item");
+      this.items = [...items].map((el) => ({
+        title: el.querySelector("title").innerHTML,
+        news: this.cleanNews(el.querySelector("description").innerHTML),
+        date: el.querySelector("pubDate").innerHTML,
+        link: el.querySelector("link").innerHTML,
+        photoUrl: el.querySelector("enclosure").getAttribute("url"),
+      }));
+    },
+    cleanNews(dirty) {
+      let clean = dirty
+        .replace("<![CDATA[", "")
+        .replace("]]>", "")
+        .replace("&nbsp;", " ")
+        .replace(".&nbsp;", " ");
+      return clean;
+    },
+  },
+  created: function () {
+    this.getRss();
   },
 };
 </script>
@@ -37,5 +74,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   color: var(--primary-shade-color);
   margin-top: 10px;
+}
+h3 {
+  font-size: 18px;
 }
 </style>
