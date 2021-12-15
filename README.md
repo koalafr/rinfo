@@ -2,8 +2,10 @@
 
 ## News app
 
-Front-End built with Vue.js
+Learning project built with Vue.js
 
-Back-end
+Deployed on netlify
+
+https://rinfo.netlify.app/
 
 
