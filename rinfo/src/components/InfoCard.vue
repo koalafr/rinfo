@@ -83,7 +83,7 @@ a:hover {
     text-align: center;
   }
   .photography img {
-    max-width: 350px;
+    max-width: 100%;
     height: auto;
   }
 }
