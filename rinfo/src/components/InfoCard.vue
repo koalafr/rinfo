@@ -27,6 +27,7 @@ export default {
 
 <style scoped>
 .infocard {
+  background: var(--background-shade-color);
   display: flex;
   margin: 0 auto;
   margin-top: 30px;
@@ -35,9 +36,9 @@ export default {
   border-radius: 7px;
   min-height: 150px;
   max-width: 650px;
-  background-color: var(--background-shade-color);
 }
 .information {
+  background: url("../assets/bg.png") 0 0 no-repeat;
   display: flex;
   flex-direction: column;
   flex-basis: 60%;
@@ -72,5 +73,18 @@ a:hover {
 }
 .information p.link {
   padding-top: 20px;
+}
+
+@media (max-width: 800px) {
+  .infocard {
+    flex-direction: column-reverse;
+  }
+  .photography {
+    text-align: center;
+  }
+  .photography img {
+    max-width: 350px;
+    height: auto;
+  }
 }
 </style>
