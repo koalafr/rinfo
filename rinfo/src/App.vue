@@ -39,6 +39,7 @@ export default {
         date: el.querySelector("pubDate").innerHTML,
         link: el.querySelector("link").innerHTML,
         photoUrl: el.querySelector("enclosure").getAttribute("url"),
+        source: "franceinfo"
       }));
     },
     cleanNews(dirty) {

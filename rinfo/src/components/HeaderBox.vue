@@ -1,15 +1,18 @@
 <template>
   <div id="header">
-    <img id="logo" alt="RINFO logo" src="@/assets/logo.png" />
-    <div id="menu">
-      <a> <img alt="Menu" src="@/assets/menu.png" /> </a>
-    </div>
+    <img id="logo" alt="rinfo logo" src="@/assets/logo.png" />
+    <AppMenu id="menu" />
   </div>
 </template>
 
 <script>
+import AppMenu from "./AppMenu.vue";
+
 export default {
   name: "HeaderBox",
+  components: {
+    AppMenu,
+  },
 };
 </script>
 
@@ -26,13 +29,7 @@ img#logo {
   max-width: 200px;
   height: auto;
 }
-div#menu {
+#menu {
   margin: auto 0;
-}
-div#menu a img {
-  transition: all 0.3s ease-in;
-}
-div#menu a img:hover {
-  transform: rotate(-90deg);
 }
 </style>
