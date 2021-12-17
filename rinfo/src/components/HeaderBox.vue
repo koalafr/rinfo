@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <img id="logo" alt="rinfo logo" src="@/assets/logo.png" />
-    <AppMenu id="menu" @clicked="updateSources" />
+    <AppMenu id="menu" @clicked="updateSources" :providers="providers" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
   components: {
     AppMenu,
   },
+  props: ["providers"],
   methods: {
     updateSources(data) {
       this.$emit("updateSource", data);

@@ -14,9 +14,9 @@
     </div>
     <div class="photography">
       <a target="_blank" :href="mdata.link">
-        <img v-if="mdata.photoUrl.length" :src="mdata.photoUrl" alt="Photo" />
+        <img v-if="mdata.photoUrl && mdata.photoUrl.length" :src="mdata.photoUrl" alt="Photo" />
         <img
-          v-if="!mdata.photoUrl.length"
+          v-if="!mdata.photoUrl || !mdata.photoUrl.length"
           src="@/assets/bg.png"
           alt="Photo Non disponible"
         />

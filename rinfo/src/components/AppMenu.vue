@@ -4,35 +4,15 @@
       <img :class="{ active: showModal }" alt="Menu" src="@/assets/menu.png" />
     </a>
     <div id="menu-modal" v-if="showModal">
-      <div class="menu-choice">
+      <div v-for="item of providers" :key="item.id" class="menu-choice">
         <input
           type="checkbox"
-          id="Franceinfo"
-          value="Franceinfo"
+          :id="item.id"
+          :value="item.id"
           v-model="checkedSources"
         />
-        <label for="Franceinfo">Franceinfo</label>
+        <label :for="item.id">{{ item.name }}</label>
       </div>
-      <div class="menu-choice">
-        <input
-          type="checkbox"
-          id="LeMonde"
-          value="LeMonde"
-          v-model="checkedSources"
-        />
-        <label for="LeMonde">Le Monde</label>
-      </div>
-      <div class="menu-choice">
-        <input
-          type="checkbox"
-          id="LeFigaro"
-          value="LeFigaro"
-          v-model="checkedSources"
-        />
-        <label for="LeFigaro">Le Figaro</label>
-      </div>
-      <br />
-      <span>Sources: {{ checkedSources }}</span>
     </div>
   </div>
 </template>
@@ -40,10 +20,11 @@
 <script>
 export default {
   name: "AppMenu",
+  props: ["providers"],
   data() {
     return {
       showModal: false,
-      checkedSources: ["Franceinfo"],
+      checkedSources: [this.providers[0].id],
     };
   },
   methods: {
