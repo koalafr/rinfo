@@ -1,6 +1,6 @@
 <template>
-  <HeaderBox />
-  <HelloWorld msg="Welcome" />
+  <HeaderBox @updateSource="reloadFeed" />
+  <HelloWorld msg="Welcome" :newsSources="newsSources"/>
 
   <div v-for="item of items" :key="item.title">
     <InfoCard :mdata="item" />
@@ -23,9 +23,22 @@ export default {
     return {
       rssUrl: "https://www.francetvinfo.fr/titres.rss",
       items: [],
+      newsSources: ["Franceinfo"],
     };
   },
   methods: {
+    reloadFeed(updatedSources) {
+      if (JSON.stringify(this.newsSources) != JSON.stringify(updatedSources)) {
+        this.newsSources = updatedSources;
+        this.items = [];
+        updatedSources.forEach((element) => {
+          if (element === "Franceinfo") {
+            this.getRss();
+            console.log("refresh");
+          }
+        });
+      }
+    },
     async getRss() {
       const res = await fetch(
         `https://api.allorigins.win/get?url=${this.rssUrl}`
@@ -34,18 +47,30 @@ export default {
       const feed = new window.DOMParser().parseFromString(contents, "text/xml");
       const items = feed.querySelectorAll("item");
       this.items = [...items].map((el) => ({
-        title: el.querySelector("title").innerHTML,
-        news: this.cleanNews(el.querySelector("description").innerHTML),
-        date: el.querySelector("pubDate").innerHTML,
-        link: el.querySelector("link").innerHTML,
-        photoUrl: el.querySelector("enclosure").getAttribute("url"),
-        source: "franceinfo"
+        title: this.safegetXML(el, "title"),
+        news: this.cleanNews(this.safegetXML(el, "description")),
+        date: this.safegetXML(el, "pubDate"),
+        link: this.safegetXML(el, "link"),
+        photoUrl:
+          (el.querySelector("enclosure") &&
+            el.querySelector("enclosure").getAttribute("url")) ||
+          "",
+        source: "franceinfo",
       }));
+    },
+    safegetXML(el, selectMe) {
+      if (!el) return "";
+      let selected = el.querySelector(selectMe);
+      if (!selected) {
+        return "";
+      }
+      return selected.innerHTML;
     },
     cleanNews(dirty) {
       let clean = dirty
         .replace("<![CDATA[", "")
         .replace("]]>", "")
+        .replace("&quot;", "'")
         .replace("&nbsp;", " ")
         .replace(".&nbsp;", " ");
       return clean;

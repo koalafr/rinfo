@@ -5,12 +5,21 @@
       <h3>{{ mdata.title }}</h3>
       <p>{{ mdata.news }}</p>
       <p class="link">
-        <a target="_blank" :href="mdata.link"> Lire la suite sur {{ mdata.source }} ></a>
+        <a target="_blank" :href="mdata.link">
+          Lire la suite sur {{ mdata.source }}
+          <span class="spaceHover">&nbsp;</span>
+          >
+        </a>
       </p>
     </div>
     <div class="photography">
       <a target="_blank" :href="mdata.link">
-        <img :src="mdata.photoUrl" alt="photo" />
+        <img v-if="mdata.photoUrl.length" :src="mdata.photoUrl" alt="Photo" />
+        <img
+          v-if="!mdata.photoUrl.length"
+          src="@/assets/bg.png"
+          alt="Photo Non disponible"
+        />
       </a>
     </div>
   </div>
@@ -21,6 +30,11 @@ export default {
   name: "InfoCard",
   props: {
     mdata: {},
+  },
+  data() {
+    return {
+      backupURL: "@/assets/bg.png",
+    };
   },
 };
 </script>
@@ -61,8 +75,11 @@ p {
   margin: 2px 0;
   margin-right: 10px;
 }
+h3 {
+  font-size: 1em;
+}
 p.date {
-  font-size: 80%;
+  font-size: 0.9em;
 }
 a {
   text-decoration: none;
@@ -70,6 +87,10 @@ a {
 }
 a:hover {
   color: var(--blackdrop-color);
+}
+a:hover span.spaceHover::before {
+  content: '_';
+  color: var(--background-shade-color);
 }
 .information p.link {
   padding-top: 20px;

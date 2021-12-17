@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <img id="logo" alt="rinfo logo" src="@/assets/logo.png" />
-    <AppMenu id="menu" />
+    <AppMenu id="menu" @clicked="updateSources" />
   </div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   name: "HeaderBox",
   components: {
     AppMenu,
+  },
+  methods: {
+    updateSources(data) {
+      this.$emit("updateSource", data);
+    },
   },
 };
 </script>

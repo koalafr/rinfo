@@ -1,7 +1,10 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>Have some news.</p>
+    <h2>Votre info</h2>
+    <p>
+      <span v-for="item of newsSources" :key="item"> {{ item }} &nbsp; </span>
+      <span v-if="!newsSources.length">Sélectionnez une/des source.s d'infos !</span>
+    </p>
   </div>
 </template>
 
@@ -10,6 +13,7 @@ export default {
   name: "HelloWorld",
   props: {
     msg: String,
+    newsSources: Array,
   },
 };
 </script>
@@ -31,7 +35,10 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
+p {
+  padding: 5px;
+  border-top-right-radius: 7px;
+  background: var(--primary-color);
+  color: var(--background-color);
 }
 </style>
