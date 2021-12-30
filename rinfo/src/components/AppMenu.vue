@@ -12,6 +12,8 @@
           v-model="checkedSources"
         />
         <label :for="item.id">{{ item.name }}</label>
+        &nbsp;
+        <img class="source-icon" :src="item.icon?? null" />
       </div>
     </div>
   </div>
@@ -48,6 +50,12 @@ a img {
 }
 a img:hover {
   transform: rotate(-90deg);
+}
+
+.source-icon {
+  width: 24px;
+  height: auto;
+  vertical-align: bottom;
 }
 
 #menu-modal {
